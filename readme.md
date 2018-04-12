@@ -30,18 +30,25 @@ CREATE TABLE `database_name`.`api_keys` (
 ) ENGINE = InnoDB;
 ```
 
+## Requirements
+
+1. PHP 5.4 or greater
+2. CodeIgniter 3.0+
+
+Note: The library is used in CodeIgniter v3.8 and PHP 5.6.8.
+
 ## Documentation
 
 * This Function by default request method `GET`
 
 ```php
-$this->_apiConfig();
+$this->_APIConfig();
 ```
 
 * Set `API Request` Method `POST, GET, ..`
 
 ```php
-$this->_apiConfig([
+$this->_APIConfig([
     'methods' => ['POST', 'GET'],
 ]);
 ```
@@ -58,7 +65,7 @@ $this->_apiConfig([
  * @param: {int} api limit time/minute (last {5} minute)
  */
 
-$this->_apiConfig([
+$this->_APIConfig([
     // number limit, type limit, time limit (last minute)
     'limit' => [10, 'ip', 5] 
 ]);
@@ -73,7 +80,7 @@ $this->_apiConfig([
  * @param: {string} api limit everyday
  */
 
-$this->_apiConfig([
+$this->_APIConfig([
     // number limit, type limit, everyday
     'limit' => [10, 'ip', 'everyday'] 
 ]);
@@ -92,7 +99,7 @@ $this->_apiConfig([
  * @param: {string} ['table : Check Key in Database', 'key']
  */
 
-$this->_apiConfig([
+$this->_APIConfig([
     // type, {key}|table (by default)
     'key' => ['header', 'key'],
     // 'key' => ['get', 'key'],
@@ -109,8 +116,45 @@ $this->_apiConfig([
  * @param: {string} ['table : Check Key in Database', 'key']
  */
 
-$this->_apiConfig([
+$this->_APIConfig([
     // type, {key}|table (by default)
     'key' => ['header'], 
+]);
+```
+
+* Add Return Data in API Responses : __array()__
+
+```php
+$this->_APIConfig([
+    'data' => [ 'is_login' => false ]
+]);
+```
+
+```json
+{
+    "status": false,
+    "error": "API Key POST Parameter Required",
+    // data user define data
+    "is_login": false
+}
+```
+
+## API Return
+
+```php
+$this->api_return(data, header_code);
+```
+
+## Using the Config file in the API key
+
+1. Create config file `\application\config\api_keys.php`
+2. Use in API Controller like this
+
+```php
+// load api keys config file
+$this->load->config('api_keys');
+
+$this->_APIConfig([
+    'key' => ['post', $this->config->item('controller/api key name')],
 ]);
 ```

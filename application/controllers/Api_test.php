@@ -26,7 +26,7 @@ class Api_Test extends API_Controller
              * type :: ['header', 'get', 'post']
              * key  :: ['table : Check Key in Database', 'key']
              */
-            'key' => ['GET'], // type, {key}|table (by default)
+            // 'key' => ['GET'], // type, {key}|table (by default)
         ]);
         
         
