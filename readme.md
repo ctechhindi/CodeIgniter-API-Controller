@@ -1,16 +1,5 @@
 # CodeIgniter API Controller v.1.1.0
 
-[![GitHub package version](https://img.shields.io/badge/package-v1.1.0-blue.svg)](https://github.com/jeevan15498/CodeIgniter-API-Controller/releases/tag/v1.1.0)
-[![GitHub stars](https://img.shields.io/github/stars/jeevan15498/CodeIgniter-API-Controller.svg?style=flat-square)](https://github.com/jeevan15498/CodeIgniter-API-Controller/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/jeevan15498/CodeIgniter-API-Controller.svg?style=flat-square)](https://github.com/jeevan15498/CodeIgniter-API-Controller/issues)
-[![GitHub forks](https://img.shields.io/github/forks/jeevan15498/CodeIgniter-API-Controller.svg?style=flat-square)](https://github.com/jeevan15498/CodeIgniter-API-Controller/network)
-[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/jeevan15498/CodeIgniter-API-Controller)
-
-
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jeevan15498/CodeIgniter-API-Controller/issues)
-[![HitCount](http://hits.dwyl.io/jeean15498/CodeIgniter-API-Controller.svg)](https://github.com/jeevan15498/CodeIgniter-API-Controller)
-[![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)](https://github.com/jeevan15498/CodeIgniter-API-Controller/archive/master.zip)
-
 ## Files
 
 [API Documentation](https://github.com/jeevan15498/CodeIgniter-API-Controller#documentation)
