@@ -1,10 +1,10 @@
 {
 	"description": "CodeIgniter API Controller",
 	"name": "ctechhindi/codeigniter-api",
-	"type": "project",
+	"homepage": "https://github.com/jeevan15498/CodeIgniter-API-Controller",
+	"type": "library",
 	"keywords": ["CodeIgniter", "Rest", "Api", "Rest Api", "CodeIgniter Rest", "CodeIgniter Rest Api"],
 	"license": "MIT",
-	"minimum-stability": "stable",
 	"authors": [
         {
             "name": "Jeevan Lal",
@@ -22,7 +22,5 @@
 		"issues": "https://github.com/jeevan15498/CodeIgniter-API-Controller/issues",
 		"video": "https://www.youtube.com/channel/UCfd4AN4UKiWyHDdq-fizQGA"
 	},
-	"require": {
-		"php": ">=5.3.7"
-	}
+	"require": {}
 }
