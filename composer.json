@@ -4,7 +4,7 @@
 	"type": "project",
 	"keywords": ["CodeIgniter", "Rest", "Api", "Rest Api", "CodeIgniter Rest", "CodeIgniter Rest Api"],
 	"license": "MIT",
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"authors": [
         {
             "name": "Jeevan Lal",
