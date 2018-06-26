@@ -8,8 +8,7 @@
  * @category        Libraries
  * @author          Jeevan Lal
  * @license         MIT
- * @link            
- * @version         1.0.0
+ * @version         1.1.0
  */
 class API_Controller extends CI_Controller
 {
@@ -63,18 +62,34 @@ class API_Controller extends CI_Controller
         '200' => 'OK',
     ];
 
-    const API_LIMIT_TABLE_NAME = 'api_limit';
-    const API_KEYS_TABLE_NAME = 'api_keys';
+    /**
+     * API LIMIT TABLE NAME
+     */
+    protected $API_LIMIT_TABLE_NAME;
 
-    public $return_other_data = [];
+    /**
+     * API KEYS TABLE NAME
+     */
+    protected $API_KEYS_TABLE_NAME;
+
+    /**
+     * RETURN DATA
+     */
+    protected $return_other_data = [];
     
     public function __construct() {
         parent::__construct();
-        date_default_timezone_set('Asia/Kolkata');
         $this->CI =& get_instance();
 
         // load api config file
         $this->CI->load->config('api');
+
+        // set timezone for api limit
+        date_default_timezone_set($this->CI->config->item('api_timezone'));
+
+        // Load Config Items Values
+        $this->API_LIMIT_TABLE_NAME = $this->CI->config->item('api_limit_table_name');
+        $this->API_KEYS_TABLE_NAME  = $this->CI->config->item('api_keys_table_name');
     }
 
 
@@ -98,6 +113,15 @@ class API_Controller extends CI_Controller
         // api key function `_api_key()`
         if(isset($config['key']))
             $this->_api_key($config['key']);
+
+        // IF Require Authentication
+        if(isset($config['requireAuthorization']) AND $config['requireAuthorization'] === true) {
+            $token_data = $this->_isAuthorized();
+            // remove api time in user token data
+            unset($token_data->API_TIME);
+            // return token decode data
+            return [ 'token_data' => (array) $token_data ];
+        }
     }
 
 
@@ -156,7 +180,7 @@ class API_Controller extends CI_Controller
         }
 
         // check limit database table exists
-        if (!$this->db->table_exists(self::API_LIMIT_TABLE_NAME)) {
+        if (!$this->db->table_exists($this->API_LIMIT_TABLE_NAME)) {
             $this->_response(['status' => FALSE, 'error' => 'Create Limit Database Table'], self::HTTP_BAD_REQUEST);
         }
 
@@ -174,7 +198,7 @@ class API_Controller extends CI_Controller
                 'ip_address' => $this->CI->input->ip_address(),
             ];
 
-            $limit_query = $this->CI->db->get_where(self::API_LIMIT_TABLE_NAME, $where_data_ip);
+            $limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip);
             if ($this->db->affected_rows() >= $limit_num)
             {
                 // time limit not empty
@@ -194,7 +218,7 @@ class API_Controller extends CI_Controller
                             'time >=' => $limit_timestamp
                         ];
     
-                        $time_limit_query = $this->CI->db->get_where(self::API_LIMIT_TABLE_NAME, $where_data_ip_with_time);
+                        $time_limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip_with_time);
                         // echo $this->CI->db->last_query();
                         if ($this->db->affected_rows() >= $limit_num)
                         {
@@ -228,7 +252,7 @@ class API_Controller extends CI_Controller
                             'time <=' => $end_date_timestamp,
                         ];
     
-                        $time_limit_query = $this->CI->db->get_where(self::API_LIMIT_TABLE_NAME, $where_data_ip_with_time);
+                        $time_limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip_with_time);
                         // echo $this->CI->db->last_query();exit;
                         if ($this->db->affected_rows() >= $limit_num)
                         {
@@ -269,7 +293,7 @@ class API_Controller extends CI_Controller
             'time' => time(),
         ];
 
-        insert(self::API_LIMIT_TABLE_NAME, $insert_data);
+        insert($this->API_LIMIT_TABLE_NAME, $insert_data);
     }
 
     /**
@@ -310,7 +334,7 @@ class API_Controller extends CI_Controller
                 } else
                 {
                     // check api key database table exists
-                    if (!$this->db->table_exists(self::API_KEYS_TABLE_NAME)) {
+                    if (!$this->db->table_exists($this->API_KEYS_TABLE_NAME)) {
                         $this->_response(['status' => FALSE, 'error' => 'Create API Key Database Table'], self::HTTP_BAD_REQUEST);
                     }
 
@@ -319,7 +343,7 @@ class API_Controller extends CI_Controller
                         'api_key' => $HEADER_VALUE,
                     ];
 
-                    $limit_query = $this->CI->db->get_where(self::API_KEYS_TABLE_NAME, $where_key_data);
+                    $limit_query = $this->CI->db->get_where($this->API_KEYS_TABLE_NAME, $where_key_data);
                     if (!$this->db->affected_rows() > 0)
                     {
                         $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_NOT_FOUND);
@@ -357,7 +381,7 @@ class API_Controller extends CI_Controller
                 } else
                 {
                     // check api key database table exists
-                    if (!$this->db->table_exists(self::API_KEYS_TABLE_NAME)) {
+                    if (!$this->db->table_exists($this->API_KEYS_TABLE_NAME)) {
                         $this->_response(['status' => FALSE, 'error' => 'Create API Key Database Table'], self::HTTP_BAD_REQUEST);
                     }
 
@@ -366,7 +390,7 @@ class API_Controller extends CI_Controller
                         'api_key' => $get_param_value,
                     ];
 
-                    $limit_query = $this->CI->db->get_where(self::API_KEYS_TABLE_NAME, $where_key_data);
+                    $limit_query = $this->CI->db->get_where($this->API_KEYS_TABLE_NAME, $where_key_data);
                     if (!$this->db->affected_rows() > 0)
                     {
                         $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_NOT_FOUND);
@@ -403,7 +427,7 @@ class API_Controller extends CI_Controller
                 } else
                 {
                     // check api key database table exists
-                    if (!$this->db->table_exists(self::API_KEYS_TABLE_NAME)) {
+                    if (!$this->db->table_exists($this->API_KEYS_TABLE_NAME)) {
                         $this->_response(['status' => FALSE, 'error' => 'Create API Key Database Table'], self::HTTP_BAD_REQUEST);
                     }
 
@@ -412,7 +436,7 @@ class API_Controller extends CI_Controller
                         'api_key' => $get_param_value,
                     ];
 
-                    $limit_query = $this->CI->db->get_where(self::API_KEYS_TABLE_NAME, $where_key_data);
+                    $limit_query = $this->CI->db->get_where($this->API_KEYS_TABLE_NAME, $where_key_data);
                     if (!$this->db->affected_rows() > 0)
                     {
                         $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_NOT_FOUND);
@@ -428,6 +452,26 @@ class API_Controller extends CI_Controller
         }
     }
 
+    /**
+     * Is Authorized
+     */
+    private function _isAuthorized()
+    {
+        // Load Authorization Library
+        $this->CI->load->library('authorization_token');
+
+        // check token is valid
+        $result = $this->authorization_token->validateToken();
+
+        if (isset($result['status']) AND $result['status'] === true)
+        {
+            return $result['data'];
+
+        } else {
+
+            $this->_response(['status' => FALSE, 'error' => $result['message']], self::HTTP_UNAUTHORIZED);
+        }
+    }
 
     /**
      * Check Request Header Exists

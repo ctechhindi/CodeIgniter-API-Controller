@@ -1,23 +1,28 @@
 {
-	"description": "The CodeIgniter framework",
-	"name": "codeigniter/framework",
+	"description": "CodeIgniter API Controller",
+	"name": "ctechhindi/codeigniter-api",
 	"type": "project",
-	"homepage": "https://codeigniter.com",
+	"keywords": ["CodeIgniter", "Rest", "Api", "Rest Api", "CodeIgniter Rest", "CodeIgniter Rest Api"],
 	"license": "MIT",
+	"minimum-stability": "dev",
+	"authors": [
+        {
+            "name": "Jeevan Lal",
+			"homepage": "https://github.com/jeevan15498",
+			"email": "jeevan15498@gmail.com",
+            "role": "Author"
+        },
+        {
+            "name": "Community",
+            "homepage": "https://github.com/jeevan15498/CodeIgniter-API-Controller/graphs/contributors"
+        }
+    ],
 	"support": {
-		"forum": "http://forum.codeigniter.com/",
-		"wiki": "https://github.com/bcit-ci/CodeIgniter/wiki",
-		"slack": "https://codeigniterchat.slack.com",
-		"source": "https://github.com/bcit-ci/CodeIgniter"
+		"source": "https://github.com/jeevan15498/CodeIgniter-API-Controller",
+		"issues": "https://github.com/jeevan15498/CodeIgniter-API-Controller/issues",
+		"video": "https://www.youtube.com/channel/UCfd4AN4UKiWyHDdq-fizQGA"
 	},
 	"require": {
 		"php": ">=5.3.7"
-	},
-	"suggest": {
-		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
-	},
-	"require-dev": {
-		"mikey179/vfsStream": "1.1.*",
-		"phpunit/phpunit": "4.* || 5.*"
 	}
 }
