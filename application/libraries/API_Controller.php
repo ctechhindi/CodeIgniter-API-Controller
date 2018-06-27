@@ -8,7 +8,7 @@
  * @category        Libraries
  * @author          Jeevan Lal
  * @license         MIT
- * @version         1.1.0
+ * @version         1.1.5
  */
 class API_Controller extends CI_Controller
 {
@@ -178,10 +178,14 @@ class API_Controller extends CI_Controller
         if (!isset($data[1])) {
             $this->_response(['status' => FALSE, 'error' => 'Limit Type Required'], self::HTTP_BAD_REQUEST);
         }
+        
+        if (!isset($this->db)) {
+            $this->_response(['status' => FALSE, 'error' => 'Load CodeIgniter Database Library'], self::HTTP_BAD_REQUEST);
+        }
 
         // check limit database table exists
         if (!$this->db->table_exists($this->API_LIMIT_TABLE_NAME)) {
-            $this->_response(['status' => FALSE, 'error' => 'Create Limit Database Table'], self::HTTP_BAD_REQUEST);
+            $this->_response(['status' => FALSE, 'error' => 'Create API Limit Database Table'], self::HTTP_BAD_REQUEST);
         }
 
         $limit_num = $data[0]; // limit number
@@ -328,11 +332,15 @@ class API_Controller extends CI_Controller
                 if ($api_key != "table")
                 {
                     if ($HEADER_VALUE != $api_key) {
-                        $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_UNAUTHORIZED);
+                        $this->_response(['status' => FALSE, 'error' => 'API Key Invalid'], self::HTTP_UNAUTHORIZED);
                     }
 
                 } else
                 {
+                    if (!isset($this->db)) {
+                        $this->_response(['status' => FALSE, 'error' => 'Load CodeIgniter Database Library'], self::HTTP_BAD_REQUEST);
+                    }
+
                     // check api key database table exists
                     if (!$this->db->table_exists($this->API_KEYS_TABLE_NAME)) {
                         $this->_response(['status' => FALSE, 'error' => 'Create API Key Database Table'], self::HTTP_BAD_REQUEST);
@@ -346,13 +354,13 @@ class API_Controller extends CI_Controller
                     $limit_query = $this->CI->db->get_where($this->API_KEYS_TABLE_NAME, $where_key_data);
                     if (!$this->db->affected_rows() > 0)
                     {
-                        $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_NOT_FOUND);
+                        $this->_response(['status' => FALSE, 'error' => 'API Key Invalid'], self::HTTP_NOT_FOUND);
                     } 
                 }
 
             } else
             {
-                $this->_response(['status' => FALSE, 'error' => 'API Key Header Required'], self::HTTP_NOT_FOUND);
+                $this->_response(['status' => FALSE, 'error' => 'Set API Key in Request Header'], self::HTTP_NOT_FOUND);
             }
         } else if (strtolower($api_key_type) == 'get') // // api key type `get`
         {
@@ -375,11 +383,15 @@ class API_Controller extends CI_Controller
                 if ($api_key != "table")
                 {
                     if ($get_param_value != $api_key) {
-                        $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_UNAUTHORIZED);
+                        $this->_response(['status' => FALSE, 'error' => 'API Key Invalid'], self::HTTP_UNAUTHORIZED);
                     }
 
                 } else
                 {
+                    if (!isset($this->db)) {
+                        $this->_response(['status' => FALSE, 'error' => 'Load CodeIgniter Database Library'], self::HTTP_BAD_REQUEST);
+                    }
+
                     // check api key database table exists
                     if (!$this->db->table_exists($this->API_KEYS_TABLE_NAME)) {
                         $this->_response(['status' => FALSE, 'error' => 'Create API Key Database Table'], self::HTTP_BAD_REQUEST);
@@ -393,7 +405,7 @@ class API_Controller extends CI_Controller
                     $limit_query = $this->CI->db->get_where($this->API_KEYS_TABLE_NAME, $where_key_data);
                     if (!$this->db->affected_rows() > 0)
                     {
-                        $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_NOT_FOUND);
+                        $this->_response(['status' => FALSE, 'error' => 'API Key Invalid'], self::HTTP_NOT_FOUND);
                     } 
                 }
             } else
@@ -421,11 +433,15 @@ class API_Controller extends CI_Controller
                 if ($api_key != "table")
                 {
                     if ($get_param_value != $api_key) {
-                        $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_UNAUTHORIZED);
+                        $this->_response(['status' => FALSE, 'error' => 'API Key Invalid'], self::HTTP_UNAUTHORIZED);
                     }
 
                 } else
                 {
+                    if (!isset($this->db)) {
+                        $this->_response(['status' => FALSE, 'error' => 'Load CodeIgniter Database Library'], self::HTTP_BAD_REQUEST);
+                    }
+                    
                     // check api key database table exists
                     if (!$this->db->table_exists($this->API_KEYS_TABLE_NAME)) {
                         $this->_response(['status' => FALSE, 'error' => 'Create API Key Database Table'], self::HTTP_BAD_REQUEST);
@@ -439,7 +455,7 @@ class API_Controller extends CI_Controller
                     $limit_query = $this->CI->db->get_where($this->API_KEYS_TABLE_NAME, $where_key_data);
                     if (!$this->db->affected_rows() > 0)
                     {
-                        $this->_response(['status' => FALSE, 'error' => 'API Key invalid'], self::HTTP_NOT_FOUND);
+                        $this->_response(['status' => FALSE, 'error' => 'API Key Invalid'], self::HTTP_NOT_FOUND);
                     } 
                 }
             } else
