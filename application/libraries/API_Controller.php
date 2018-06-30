@@ -8,7 +8,7 @@
  * @category        Libraries
  * @author          Jeevan Lal
  * @license         MIT
- * @version         1.1.5
+ * @version         1.1.6
  */
 class API_Controller extends CI_Controller
 {
@@ -241,12 +241,12 @@ class API_Controller extends CI_Controller
 
                         $bad_date = mdate('%d-%m-%Y', time());
 
-                        $start_date = nice_date($bad_date, 'd/m/Y h:i A'); // {DATE} 12:00 AM
-                        $end_date = nice_date($bad_date .' 12:00 PM', 'd/m/Y h:i A'); // {DATE} 12:00 PM
+                        $start_date = nice_date($bad_date .' 12:00 AM', 'd-m-Y h:i A'); // {DATE} 12:00 AM
+                        $end_date = nice_date($bad_date .' 12:00 PM', 'd-m-Y h:i A'); // {DATE} 12:00 PM
                         
                         $start_date_timestamp = strtotime($start_date);
                         $end_date_timestamp = strtotime($end_date);
-
+                       
                         $where_data_ip_with_time = [
                             'uri' => $this->CI->uri->uri_string(),
                             'class' => $this->CI->router->fetch_class(),

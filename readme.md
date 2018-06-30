@@ -1,4 +1,4 @@
-# CodeIgniter API Controller v.1.1.5
+# CodeIgniter API Controller v.1.1.6
 
 ## Files
 
@@ -113,6 +113,11 @@ The name of the database table of api limit is `api_limit` by default. Which we 
  * API Limit database table name
  */
 $config['api_limit_table_name'] = 'api_limit';
+
+/**
+ * Set API Timezone 
+ */
+$config['api_timezone'] = 'Asia/Kolkata';
 ```
 Now we can use API Limit Method.
 
