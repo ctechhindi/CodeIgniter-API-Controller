@@ -1,4 +1,6 @@
-# CodeIgniter API Controller v.1.1.6
+# CodeIgniter API Controller v.1.1.7
+
+This extension is powered by `Jeevan Lal`.
 
 ## Files
 
@@ -32,6 +34,8 @@ composer require ctechhindi/codeigniter-api:dev-master --prefer-source
 Note: The library is used in CodeIgniter v3.8 and PHP 5.6.8.
 
 ## DEMO
+
+> http://codeigniter-api.speedtyping.in/api/user/login
 
 Simple API
 

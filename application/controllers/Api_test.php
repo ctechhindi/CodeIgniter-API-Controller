@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH . '/libraries/API_Controller.php';
+require_once APPPATH . 'libraries/API_Controller.php';
 
 class Api_Test extends API_Controller
 {
@@ -85,7 +85,7 @@ class Api_Test extends API_Controller
         // Load Authorization Library or Load in autoload config file
         $this->load->library('authorization_token');
 
-        // generte a token
+        // generate a token
         $token = $this->authorization_token->generateToken($payload);
 
         // return data

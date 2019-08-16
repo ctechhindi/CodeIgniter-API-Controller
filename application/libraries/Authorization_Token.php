@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Authorization_Token
+ * Authorization_token
  * ----------------------------------------------------------
  * API Token Generate/Validation
  * 
@@ -81,7 +81,7 @@ class Authorization_Token
 
     /**
      * Validate Token with Header
-     * @return : user informations
+     * @return : user information's
      */
     public function validateToken()
     {
