@@ -474,7 +474,7 @@ class API_Controller extends CI_Controller
     private function _isAuthorized()
     {
         // Load Authorization Library
-        $this->CI->load->library('authorization_token');
+        $this->CI->load->library('Authorization_Token');
 
         // check token is valid
         $result = $this->authorization_token->validateToken();
