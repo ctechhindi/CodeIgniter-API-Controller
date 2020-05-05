@@ -202,8 +202,12 @@ class API_Controller extends CI_Controller
                 'ip_address' => $this->CI->input->ip_address(),
             ];
 
-            $limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip);
-            if ($this->db->affected_rows() >= $limit_num)
+            // $limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip);
+            // if ($this->db->affected_rows() >= $limit_num)
+			$this->db->where($where_data_ip);
+            $this->db->from($this->API_LIMIT_TABLE_NAME);
+            $limit_query = $this->db->count_all_results();
+            if ($limit_query >= $limit_num)
             {
                 // time limit not empty
                 if (isset($limit_time) AND !empty($limit_time))
@@ -222,9 +226,13 @@ class API_Controller extends CI_Controller
                             'time >=' => $limit_timestamp
                         ];
     
-                        $time_limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip_with_time);
+                        // $time_limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip_with_time);
                         // echo $this->CI->db->last_query();
-                        if ($this->db->affected_rows() >= $limit_num)
+                        // if ($this->db->affected_rows() >= $limit_num)
+						$this->db->where($where_data_ip_with_time);
+                        $this->db->from($this->API_LIMIT_TABLE_NAME);
+                        $time_limit_query = $this->db->count_all_results();
+                        if ($time_limit_query >= $limit_num)
                         {
                             $this->_response(['status' => FALSE, 'error' => 'This IP Address has reached the time limit for this method'], self::HTTP_REQUEST_TIMEOUT);
                         } else
@@ -256,9 +264,13 @@ class API_Controller extends CI_Controller
                             'time <=' => $end_date_timestamp,
                         ];
     
-                        $time_limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip_with_time);
+                        // $time_limit_query = $this->CI->db->get_where($this->API_LIMIT_TABLE_NAME, $where_data_ip_with_time);
                         // echo $this->CI->db->last_query();exit;
-                        if ($this->db->affected_rows() >= $limit_num)
+                        // if ($this->db->affected_rows() >= $limit_num)
+						$this->db->where($where_data_ip_with_time);
+                        $this->db->from($this->API_LIMIT_TABLE_NAME);
+                        $time_limit_query = $this->db->count_all_results();
+                        if ($time_limit_query >= $limit_num)
                         {
                             $this->_response(['status' => FALSE, 'error' => 'This IP Address has reached the time limit for this method'], self::HTTP_REQUEST_TIMEOUT);
                         } else
